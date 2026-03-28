@@ -1,6 +1,38 @@
-import { useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function FeatureModal({ itemId, onClose }) {
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    if (itemId === null) return;
+
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      const modal = modalRef.current;
+      if (!modal) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('opacity-0', 'translate-y-12');
+            entry.target.classList.add('opacity-100', 'translate-y-0');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        root: modal,
+        threshold: 0.2
+      });
+
+      const animatedElements = modal.querySelectorAll('.scroll-animate-card');
+      animatedElements.forEach(el => observer.observe(el));
+
+      return () => observer.disconnect();
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [itemId]);
+
   if (itemId === null) return null;
 
   return (
@@ -12,7 +44,11 @@ export default function FeatureModal({ itemId, onClose }) {
       />
       
       {/* Modal Container */}
-      <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-surface flex flex-col rounded-3xl border border-outline-variant/30 shadow-[0_0_50px_rgba(0,243,255,0.1)] z-10 animate-in zoom-in-95 duration-300">
+      <div 
+        ref={modalRef}
+        data-lenis-prevent="true"
+        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-surface flex flex-col rounded-3xl border border-outline-variant/30 shadow-[0_0_50px_rgba(0,243,255,0.1)] z-10 animate-in zoom-in-95 duration-300"
+      >
         
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b border-outline-variant/20 sticky top-0 bg-surface/80 backdrop-blur-md z-20">
@@ -43,75 +79,90 @@ export default function FeatureModal({ itemId, onClose }) {
         <div className="p-6 md:p-10 space-y-8">
           
           {itemId === 0 && (
-            <div className="animate-in slide-in-from-bottom-4 duration-500">
-              <h4 className="text-xl font-bold text-white mb-6">Consumer-Funded Liquidity Architecture</h4>
+            <div className="animate-in slide-in-from-bottom-4 duration-500 h-full flex flex-col justify-center">
+              <h4 className="text-2xl font-bold text-white mb-8 text-center pt-8">Consumer-Funded Liquidity Architecture</h4>
               
-              <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-8 rounded-2xl bg-surface-container border border-outline-variant/20">
-                <div className="flex flex-col items-center gap-3 w-full">
-                  <span className="material-symbols-outlined text-3xl text-[#acaab1]">shopping_cart</span>
-                  <p className="text-sm font-bold text-white text-center">Consumer Checkout<br/><span className="text-xs text-on-surface-variant font-normal">Food Delivery App</span></p>
+              <div className="flex flex-col md:flex-row items-center justify-between gap-8 p-12 md:py-32 rounded-3xl bg-surface-container border border-outline-variant/20 shadow-2xl">
+                <div className="flex flex-col items-center gap-4 w-full">
+                  <span className="material-symbols-outlined text-5xl text-[#acaab1]">shopping_cart</span>
+                  <p className="text-lg font-bold text-white text-center">Consumer Checkout<br/><span className="text-sm text-on-surface-variant font-normal">Food Delivery App</span></p>
                 </div>
-                <div className="h-10 w-0.5 md:w-16 md:h-0.5 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-primary to-transparent relative">
-                  <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-primary font-bold whitespace-nowrap bg-surface-container px-2">+ ₹2 Surcharge</span>
+                <div className="h-16 w-0.5 md:w-32 md:h-0.5 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-primary to-transparent relative">
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-primary font-bold whitespace-nowrap bg-surface-container px-3 py-1 rounded-full border border-primary/20">+ ₹2–₹5 Variable Surcharge</span>
                 </div>
-                <div className="flex flex-col items-center gap-3 w-full p-4 rounded-xl bg-primary/5 border border-primary/20 shadow-[0_0_20px_rgba(0,243,255,0.1)]">
-                  <span className="material-symbols-outlined text-3xl text-primary">water_drop</span>
-                  <p className="text-sm font-bold text-primary text-center">Liquidity Pool<br/><span className="text-xs text-on-surface-variant font-normal">Self-Balancing Aggregator</span></p>
+                <div className="flex flex-col items-center gap-4 w-full p-8 rounded-2xl bg-primary/5 border border-primary/20 shadow-[0_0_40px_rgba(0,243,255,0.15)] transform hover:scale-105 transition-transform">
+                  <span className="material-symbols-outlined text-5xl text-primary">water_drop</span>
+                  <p className="text-lg font-bold text-primary text-center">Liquidity Pool<br/><span className="text-sm text-on-surface-variant font-normal">Self-Balancing Aggregator</span></p>
                 </div>
-                <div className="h-10 w-0.5 md:w-16 md:h-0.5 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-secondary to-transparent relative">
-                  <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-secondary font-bold whitespace-nowrap bg-surface-container px-2">Trigger Met</span>
+                <div className="h-16 w-0.5 md:w-32 md:h-0.5 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-secondary to-transparent relative">
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-secondary font-bold whitespace-nowrap bg-surface-container px-3 py-1 rounded-full border border-secondary/20">Trigger Met</span>
                 </div>
-                <div className="flex flex-col items-center gap-3 w-full">
-                  <span className="material-symbols-outlined text-3xl text-secondary">flash_on</span>
-                  <p className="text-sm font-bold text-white text-center">Instant Payout<br/><span className="text-xs text-on-surface-variant font-normal">Gig Worker Wallet</span></p>
+                <div className="flex flex-col items-center gap-4 w-full">
+                  <span className="material-symbols-outlined text-5xl text-secondary">flash_on</span>
+                  <p className="text-lg font-bold text-white text-center">Instant Payout<br/><span className="text-sm text-on-surface-variant font-normal">Gig Worker Wallet</span></p>
                 </div>
               </div>
-              
-              <div className="mt-8 p-6 rounded-2xl bg-[#0e0e13] border border-outline-variant/10 font-mono text-sm">
-                <p className="text-primary mb-2">// Actuarial Math Model</p>
-                <p className="text-white"><span className="text-[#b190ff]">const</span> TARGET_PREMIUM = <span className="text-secondary">391</span>; <span className="text-on-surface-variant">/* INR Weekly */</span></p>
-                <p className="text-white"><span className="text-[#b190ff]">const</span> BASE_SURCHARGE = <span className="text-secondary">2.50</span>;</p>
-                <p className="text-white mt-4"><span className="text-[#b190ff]">function</span> <span className="text-primary">calculatePoolHealth</span>(activeDeliveries) {'{'}</p>
-                <p className="text-white ml-4"><span className="text-[#b190ff]">return</span> (activeDeliveries * BASE_SURCHARGE) &gt;= TARGET_PREMIUM;</p>
-                <p className="text-white">{'}'}</p>
+
+              {/* Additional Week 1 Deliverables */}
+              <div className="mt-12 mb-8">
+                <h5 className="text-sm font-bold text-on-surface-variant uppercase tracking-widest mb-6 text-center">Week 1 Foundational Work</h5>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  
+                  <div className="scroll-animate-card opacity-0 translate-y-12 transition-all duration-700 ease-out delay-100 p-6 rounded-2xl bg-[#0e0e13] border border-outline-variant/20 shadow-lg flex flex-col gap-4 hover:border-primary/30 group">
+                    <span className="material-symbols-outlined text-3xl text-primary group-hover:scale-110 transition-transform">function</span>
+                    <div>
+                      <h6 className="text-white font-bold mb-2">Actuarial Math Engine</h6>
+                      <p className="text-xs text-on-surface-variant leading-relaxed">Formulated target premiums (₹391/week) vs driver variable delivery volumes to guarantee liquidity pool sustainability.</p>
+                    </div>
+                  </div>
+
+                  <div className="scroll-animate-card opacity-0 translate-y-12 transition-all duration-700 ease-out delay-200 p-6 rounded-2xl bg-[#0e0e13] border border-outline-variant/20 shadow-lg flex flex-col gap-4 hover:border-secondary/30 group">
+                    <span className="material-symbols-outlined text-3xl text-secondary group-hover:scale-110 transition-transform">storm</span>
+                    <div>
+                      <h6 className="text-white font-bold mb-2">Risk Event Scoping</h6>
+                      <p className="text-xs text-on-surface-variant leading-relaxed">Categorized trigger events into discrete data points: extreme heat thresholds, heavy rain patterns, and AQI spikes.</p>
+                    </div>
+                  </div>
+
+                  <div className="scroll-animate-card opacity-0 translate-y-12 transition-all duration-700 ease-out delay-300 p-6 rounded-2xl bg-[#0e0e13] border border-outline-variant/20 shadow-lg flex flex-col gap-4 hover:border-white/30 group">
+                    <span className="material-symbols-outlined text-3xl text-white group-hover:scale-110 transition-transform">account_tree</span>
+                    <div>
+                      <h6 className="text-white font-bold mb-2">Guidewire Schema Draft</h6>
+                      <p className="text-xs text-on-surface-variant leading-relaxed">Sketched initial system flow connecting live weather API stubs directly to backend ClaimCenter architecture.</p>
+                    </div>
+                  </div>
+
+                </div>
               </div>
             </div>
           )}
 
           {itemId === 1 && (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in slide-in-from-bottom-4 duration-500">
-              <div className="space-y-4">
-                <h4 className="text-lg font-bold text-white flex items-center gap-2"><span className="material-symbols-outlined text-secondary text-lg">radar</span> Anomaly Detection</h4>
-                <div className="h-64 rounded-2xl bg-[#000000] border border-outline-variant/10 p-4 font-mono text-xs overflow-y-auto w-full relative">
-                  <div className="absolute top-2 right-2 flex gap-1">
-                    <div className="w-2 h-2 rounded-full bg-error animate-pulse"></div>
-                  </div>
-                  <p className="text-[#acaab1] mb-2">[SYSTEM] Booting Isolation Forest...</p>
-                  <p className="text-primary mb-2">[LOG] Analyzing worker node #8492</p>
-                  <p className="text-[#acaab1] mb-2">Distance vs Time: <span className="text-secondary">Normal</span></p>
-                  <p className="text-primary mb-2">[LOG] Analyzing worker node #A155</p>
-                  <p className="text-[#acaab1] mb-2">Distance vs Time: <span className="text-error font-bold">IMPOSSIBLE PHYSICS DETECTED</span></p>
-                  <p className="text-error mb-2">   -&gt; Teleportation distance: 15km in 2s</p>
-                  <p className="text-error mb-4">   -&gt; Action: Flagged as Syndicate Node</p>
-                  <p className="text-primary mb-2">[LOG] Analyzing worker node #339X (Real Storm Caught)</p>
-                  <p className="text-[#acaab1] mb-2">Routing to: <span className="text-secondary font-bold">Agentic GenAI Vision</span></p>
-                </div>
-              </div>
+            <div className="animate-in slide-in-from-bottom-4 duration-500 h-full flex flex-col justify-center">
+              <h4 className="text-2xl font-bold text-white mb-8 text-center pt-8">Isolation & Adjudication Pipeline</h4>
               
-              <div className="space-y-4">
-                <h4 className="text-lg font-bold text-white flex items-center gap-2"><span className="material-symbols-outlined text-primary text-lg">schema</span> DB Schema</h4>
-                <div className="h-64 rounded-2xl bg-surface-container border border-outline-variant/10 p-4 font-mono text-xs overflow-y-auto text-primary">
-                  <p className="text-white">type <span className="text-secondary">ClaimSchema</span> = {'{'}</p>
-                  <p className="ml-4 text-white">claim_id: <span className="text-[#b190ff]">UUID</span>;</p>
-                  <p className="ml-4 text-white">driver_uuid: <span className="text-[#b190ff]">UUID</span>;</p>
-                  <p className="ml-4 text-white">isolation_score: <span className="text-[#b190ff]">Float</span>; <span className="text-on-surface-variant">// &gt;0.8 = Anomaly</span></p>
-                  <p className="ml-4 text-white">status: <span className="text-secondary">'PENDING' | 'QUARANTINE' | 'PAID'</span>;</p>
-                  <p className="ml-4 text-white">metadata: {'{'}</p>
-                  <p className="ml-8 text-white">gps_spoof_prob: <span className="text-[#b190ff]">Float</span>,</p>
-                  <p className="ml-8 text-white">vision_ai_override: <span className="text-[#b190ff]">Boolean</span>,</p>
-                  <p className="ml-8 text-white">weather_severity_idx: <span className="text-[#b190ff]">Int</span></p>
-                  <p className="ml-4 text-white">{'}'}</p>
-                  <p className="text-white">{'}'}</p>
+              <div className="flex flex-col md:flex-row items-center justify-between gap-8 p-12 md:py-32 rounded-3xl bg-surface-container border border-outline-variant/20 shadow-2xl">
+                <div className="flex flex-col items-center gap-4 w-full">
+                  <span className="material-symbols-outlined text-5xl text-[#acaab1]">person_pin_circle</span>
+                  <p className="text-lg font-bold text-white text-center">Driver Ping<br/><span className="text-sm text-on-surface-variant font-normal">GPS & Velocity Data</span></p>
+                </div>
+                
+                <div className="h-16 w-0.5 md:w-32 md:h-0.5 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-error to-transparent relative">
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-error font-bold whitespace-nowrap bg-surface-container px-3 py-1 rounded-full border border-error/20">Anomaly Map</span>
+                </div>
+                
+                <div className="flex flex-col items-center gap-4 w-full p-8 rounded-2xl bg-error/5 border border-error/20 shadow-[0_0_40px_rgba(255,100,100,0.1)] transform hover:scale-105 transition-transform relative">
+                  <span className="material-symbols-outlined text-5xl text-error">policy</span>
+                  <p className="text-lg font-bold text-error text-center">Isolation Forest<br/><span className="text-sm text-error/70 font-normal">Syndicate Filter</span></p>
+                </div>
+                
+                <div className="h-16 w-0.5 md:w-32 md:h-0.5 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-secondary to-transparent relative">
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-secondary font-bold whitespace-nowrap bg-surface-container px-3 py-1 rounded-full border border-secondary/20">Valid Risk</span>
+                </div>
+                
+                <div className="flex flex-col items-center gap-4 w-full p-8 rounded-2xl bg-secondary/5 border border-secondary/20 shadow-[0_0_40px_rgba(0,254,102,0.1)] transform hover:scale-105 transition-transform">
+                  <span className="material-symbols-outlined text-5xl text-secondary">visibility</span>
+                  <p className="text-lg font-bold text-secondary text-center">Agentic Vision<br/><span className="text-sm text-secondary/70 font-normal">Claim Adjudication</span></p>
                 </div>
               </div>
             </div>
