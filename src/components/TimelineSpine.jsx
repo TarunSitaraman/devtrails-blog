@@ -3,9 +3,9 @@ import { useEffect, useRef } from 'react';
 const cardsData = [
   {
     layer: 'Protocol Layer',
-    title: 'Week 1: The Foundation',
+    title: 'Week 1: Why Should the Weather Cost You Your Wages?',
     icon: 'layers',
-    content: 'Establishing the core architectural parameters for decentralized risk management and coverage pools. Our ledger implementation utilizes sub-second finality via the Kinetic engine.',
+    content: "India’s 15 million platform-based delivery partners lose 20 to 30 percent of their daily income to external disruptions like extreme weather. Our breakthrough: The driver shouldn't pay a single rupee. We architected a consumer-funded parametric model embedding a ₹2 to ₹5 micro-surcharge at the consumer's checkout, aggregating into a self-balancing pool equivalent to a ₹391 weekly premium.",
     glowClass: 'kinetic-glow-blue',
     accentColor: 'text-primary',
     bgLight: 'bg-primary/10',
@@ -15,9 +15,9 @@ const cardsData = [
   },
   {
     layer: 'Execution Layer',
-    title: 'Week 2: The Ledger',
+    title: 'Week 2: Surviving the Syndicate',
     icon: 'database',
-    content: 'Implementing the high-throughput mathematical core. Every transaction is visualized as a node within the helix, ensuring transparency and deterministic execution paths.',
+    content: '24 hours before the deadline, a regulatory shock hit: a 500-worker GPS-spoofing syndicate was draining beta platforms. We pivoted overnight, deploying an Isolation Forest AI to catch impossible physics and teleportation. For honest workers caught in real storms, we built a Quarantine workflow adjudicated by an Agentic GenAI Vision Model. This secured us a 4-Star Rating and DC 32,000!',
     glowClass: 'kinetic-glow-green',
     accentColor: 'text-secondary',
     bgLight: 'bg-secondary/10',
@@ -27,9 +27,9 @@ const cardsData = [
   },
   {
     layer: 'Interaction Layer',
-    title: 'Week 3: The Interface',
+    title: 'Week 3: Moving from Mock to Machine',
     icon: 'view_quilt',
-    content: 'Finalizing the spatial UI. Moving beyond grids into fluid, motion-driven states that react to user intent through the Spatial Layout Engine\'s physics model.',
+    content: 'Phase 2 is about execution. We are stripping out our Phase 1 stubs and wiring up real-world intelligence. We are integrating live APIs (OpenWeatherMap and AQI) to trigger automated claims. Our XGBoost pricing engine is actively scaling the micro-surcharge based on hyper-local weather. We also added explicit systemic exclusions and Aggregate Stop-Loss Reinsurance to protect against cluster risks.',
     glowClass: 'kinetic-glow-blue',
     accentColor: 'text-primary',
     bgLight: 'bg-primary/10',
