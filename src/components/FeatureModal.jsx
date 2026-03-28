@@ -60,10 +60,10 @@ export default function FeatureModal({ itemId, onClose }) {
             </div>
             <div>
               <h3 className="text-white font-bold text-lg tracking-tight">
-                {itemId === 0 ? 'Parametric Surcharge Flow' : itemId === 1 ? 'Quarantine Workflow Matrix' : 'Live XGBoost Sandbox'}
+                {itemId === 0 ? 'Parametric Surcharge Flow' : itemId === 1 ? 'Execution Architecture & Anti-Spoofing' : 'Live XGBoost Sandbox'}
               </h3>
               <p className="text-on-surface-variant text-xs uppercase tracking-widest">
-                {itemId === 0 ? 'Module Inspector' : itemId === 1 ? 'Schema Viewer' : 'Interactive Demo'}
+                {itemId === 0 ? 'Module Inspector' : itemId === 1 ? 'System Overview' : 'Interactive Demo'}
               </p>
             </div>
           </div>
@@ -163,6 +163,38 @@ export default function FeatureModal({ itemId, onClose }) {
                 <div className="flex flex-col items-center gap-4 w-full p-8 rounded-2xl bg-secondary/5 border border-secondary/20 shadow-[0_0_40px_rgba(0,254,102,0.1)] transform hover:scale-105 transition-transform">
                   <span className="material-symbols-outlined text-5xl text-secondary">visibility</span>
                   <p className="text-lg font-bold text-secondary text-center">Agentic Vision<br/><span className="text-sm text-secondary/70 font-normal">Claim Adjudication</span></p>
+                </div>
+              </div>
+
+              {/* Additional Week 2 Deliverables */}
+              <div className="mt-12 mb-8">
+                <h5 className="text-sm font-bold text-on-surface-variant uppercase tracking-widest mb-6 text-center">Week 2 Production Milestones</h5>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  
+                  <div className="scroll-animate-card opacity-0 translate-y-12 transition-all duration-700 ease-out delay-100 p-6 rounded-2xl bg-[#0e0e13] border border-outline-variant/20 shadow-lg flex flex-col gap-4 hover:border-primary/30 group">
+                    <span className="material-symbols-outlined text-3xl text-primary group-hover:scale-110 transition-transform">dns</span>
+                    <div>
+                      <h6 className="text-white font-bold mb-2">High-Performance Backend</h6>
+                      <p className="text-xs text-on-surface-variant leading-relaxed">Built a resilient Node.js/Express infrastructure backed by PostgreSQL (Supabase) for seamless, real-time state management.</p>
+                    </div>
+                  </div>
+
+                  <div className="scroll-animate-card opacity-0 translate-y-12 transition-all duration-700 ease-out delay-200 p-6 rounded-2xl bg-[#0e0e13] border border-outline-variant/20 shadow-lg flex flex-col gap-4 hover:border-secondary/30 group">
+                    <span className="material-symbols-outlined text-3xl text-secondary group-hover:scale-110 transition-transform">touch_app</span>
+                    <div>
+                      <h6 className="text-white font-bold mb-2">Figma "One-Handed" UX</h6>
+                      <p className="text-xs text-on-surface-variant leading-relaxed">Designed high-contrast "Insurance Active" banners and "Today's Journey" timelines tailored for mid-delivery usability.</p>
+                    </div>
+                  </div>
+
+                  <div className="scroll-animate-card opacity-0 translate-y-12 transition-all duration-700 ease-out delay-300 p-6 rounded-2xl bg-[#0e0e13] border border-outline-variant/20 shadow-lg flex flex-col gap-4 hover:border-white/30 group">
+                    <span className="material-symbols-outlined text-3xl text-white group-hover:scale-110 transition-transform">bolt</span>
+                    <div>
+                      <h6 className="text-white font-bold mb-2">Zero-Touch Claims</h6>
+                      <p className="text-xs text-on-surface-variant leading-relaxed">Engineered a frictionless interface that automatically pushes "Disruption Detected" alerts when rigorous triggers are met.</p>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
