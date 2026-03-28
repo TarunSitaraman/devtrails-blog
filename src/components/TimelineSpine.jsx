@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import FeatureModal from './FeatureModal';
 
 const cardsData = [
   {
@@ -11,7 +12,8 @@ const cardsData = [
     bgLight: 'bg-primary/10',
     borderLight: 'border-primary/20',
     tags: ['JS', 'TX'],
-    action: 'Explore Modules'
+    action: 'Explore Modules',
+    locked: false,
   },
   {
     layer: 'Execution Layer',
@@ -23,7 +25,8 @@ const cardsData = [
     bgLight: 'bg-secondary/10',
     borderLight: 'border-secondary/20',
     tags: ['L2', 'ZK'],
-    action: 'View Schema'
+    action: 'View Schema',
+    locked: false,
   },
   {
     layer: 'Interaction Layer',
@@ -35,12 +38,53 @@ const cardsData = [
     bgLight: 'bg-primary/10',
     borderLight: 'border-primary/20',
     tags: ['UI', 'UX'],
-    action: 'Live Demo'
+    action: 'Live Demo',
+    locked: false,
+  },
+  {
+    layer: 'Scaling Layer',
+    title: 'Week 4: Upcoming Deployment',
+    icon: 'lock',
+    content: 'The blueprint for scaling the decentralized pool across multi-city risk zones. This week will focus on load-testing the smart contracts and expanding the Agentic Vision Model to process vernacular audio claims.',
+    glowClass: 'border border-outline-variant/30 opacity-50',
+    accentColor: 'text-on-surface-variant',
+    bgLight: 'bg-surface-variant/20',
+    borderLight: 'border-outline-variant/20',
+    tags: ['IPFS', 'NLP'],
+    action: 'Classified',
+    locked: true,
+  },
+  {
+    layer: 'Governance Layer',
+    title: 'Week 5: Upcoming Deployment',
+    icon: 'lock',
+    content: 'Introducing DAO-driven dispute resolution where high-tier "Veteran" delivery partners act as decentralized Oracles to resolve complex Quarantine claims. Establishing community governance frameworks.',
+    glowClass: 'border border-outline-variant/30 opacity-50',
+    accentColor: 'text-on-surface-variant',
+    bgLight: 'bg-surface-variant/20',
+    borderLight: 'border-outline-variant/20',
+    tags: ['DAO', 'GOV'],
+    action: 'Classified',
+    locked: true,
+  },
+  {
+    layer: 'Finality Layer',
+    title: 'Week 6: Upcoming Deployment',
+    icon: 'lock',
+    content: 'The culmination of the QuickCover spatial architecture. Hardening security, auditing the Isolation Forest biases, and performing the final deployment to the Guidewire mainnet for judging.',
+    glowClass: 'border border-outline-variant/30 opacity-50',
+    accentColor: 'text-on-surface-variant',
+    bgLight: 'bg-surface-variant/20',
+    borderLight: 'border-outline-variant/20',
+    tags: ['SEC', 'NET'],
+    action: 'Classified',
+    locked: true,
   }
 ];
 
 export default function TimelineSpine() {
   const containerRef = useRef(null);
+  const [activeModal, setActiveModal] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,16 +98,26 @@ export default function TimelineSpine() {
         const rect = card.getBoundingClientRect();
         const cardCenter = rect.top + rect.height / 2;
         
-        // Map local card progress relative to viewport center (-1 to 1)
         let progress = (cardCenter - viewCenter) / viewCenter;
-        progress = Math.max(-1.5, Math.min(1.5, progress));
+        
+        // 1. Create a "Reading Focus Deadzone"
+        // If the card is within 25% of the center, force progress to 0 (perfectly flat and centered)
+        const deadzone = 0.25; 
+        let visualProgress = 0;
+        if (progress > deadzone) {
+            visualProgress = (progress - deadzone) / (1 - deadzone);
+        } else if (progress < -deadzone) {
+            visualProgress = (progress + deadzone) / (1 - deadzone);
+        }
+        
+        visualProgress = Math.max(-1.2, Math.min(1.2, visualProgress));
 
-        // 3D Math Logic exactly identically to Stitch output
-        const translateX = Math.sin(progress * Math.PI) * 150;
-        const translateZ = (1 - Math.cos(progress * Math.PI)) * -400;
-        const rotateY = progress * 45;
-        const rotateZ = progress * 5;
-        const opacity = Math.max(0.1, 1 - Math.abs(progress) * 0.5);
+        // 2. Apply smoother, gentler 3D transformations for the backgrounded cards
+        const translateX = Math.sin(visualProgress * Math.PI) * 120;
+        const translateZ = Math.abs(visualProgress) * -400; // Push back linearly instead of cosine curvature
+        const rotateY = visualProgress * 30; // Gentler tilt
+        const rotateZ = visualProgress * 3;
+        const opacity = Math.max(0.15, 1 - Math.abs(visualProgress) * 0.8);
 
         card.style.transform = `
             translateX(${translateX}px) 
@@ -75,10 +129,7 @@ export default function TimelineSpine() {
       });
     };
 
-    // Initial positioning
     handleScroll();
-    
-    // Smooth high framerate scroll bind
     window.addEventListener('scroll', handleScroll, { passive: true });
     
     return () => {
@@ -88,35 +139,47 @@ export default function TimelineSpine() {
 
   return (
     <>
-      <section className="helix-viewport relative min-h-[1536px] flex flex-col items-center justify-center gap-[307px]" ref={containerRef}>
+      <section className="helix-viewport relative flex flex-col items-center py-20 lg:py-40 justify-center gap-[400px]" ref={containerRef}>
         {cardsData.map((data, index) => (
           <div key={index} className={`helix-card glass-card rounded-[40px] p-8 w-full max-w-xl ${data.glowClass}`} data-index={index}>
             <div className="flex justify-between items-start mb-6">
               <div>
                 <span className={`${data.accentColor} text-xs font-bold uppercase tracking-widest block mb-2`}>{data.layer}</span>
-                <h2 className="text-3xl font-bold text-white tracking-tight">{data.title}</h2>
+                <h2 className={`text-3xl font-bold tracking-tight ${data.locked ? 'text-on-surface-variant blur-[1px]' : 'text-white'}`}>{data.title}</h2>
               </div>
               <div className={`w-12 h-12 rounded-2xl ${data.bgLight} flex items-center justify-center border ${data.borderLight}`}>
                 <span className={`material-symbols-outlined ${data.accentColor}`}>{data.icon}</span>
               </div>
             </div>
             
-            <p className="text-on-surface-variant leading-relaxed mb-8">
+            <p className={`leading-relaxed mb-8 ${data.locked ? 'text-[#55545b]' : 'text-on-surface-variant'}`}>
                 {data.content}
             </p>
             
             <div className="flex items-center justify-between">
               <div className="flex -space-x-2">
                 {data.tags.map((tag, i) => (
-                  <div key={i} className="w-8 h-8 rounded-full border-2 border-surface-container bg-surface-bright flex items-center justify-center text-[10px] text-white">
+                  <div key={i} className={`w-8 h-8 rounded-full border-2 border-surface-container bg-surface-bright flex items-center justify-center text-[10px] ${data.locked ? 'text-[#55545b]' : 'text-white'}`}>
                     {tag}
                   </div>
                 ))}
               </div>
-              <button className={`${data.accentColor} text-sm font-bold flex items-center gap-2 group`}>
-                {data.action} <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              <button 
+                onClick={() => !data.locked && setActiveModal(index)}
+                disabled={data.locked}
+                className={`${data.accentColor} text-sm font-bold flex items-center gap-2 group ${data.locked ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:underline'}`}
+              >
+                {data.action} <span className="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">{data.locked ? 'lock' : 'arrow_forward'}</span>
               </button>
             </div>
+            {data.locked && (
+                <div className="absolute inset-0 bg-surface/20 backdrop-blur-[2px] rounded-[40px] z-10 pointer-events-none flex items-center justify-center">
+                    <div className="px-6 py-2 rounded-full bg-surface-variant border border-outline-variant/30 shadow-2xl flex items-center gap-2">
+                        <span className="material-symbols-outlined text-[#acaab1] text-sm">lock</span>
+                        <span className="text-[#acaab1] text-xs font-bold uppercase tracking-widest">Locked Pipeline</span>
+                    </div>
+                </div>
+            )}
           </div>
         ))}
       </section>
@@ -129,6 +192,8 @@ export default function TimelineSpine() {
         <p className="text-secondary font-bold tracking-widest text-sm uppercase">Particles coalescing at the core</p>
       </section>
       */}
+
+      <FeatureModal itemId={activeModal} onClose={() => setActiveModal(null)} />
     </>
   );
 }
