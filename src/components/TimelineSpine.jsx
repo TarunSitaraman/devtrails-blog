@@ -139,7 +139,7 @@ export default function TimelineSpine() {
 
   return (
     <>
-      <section className="helix-viewport relative flex flex-col items-center py-20 lg:py-40 justify-center gap-[400px]" ref={containerRef}>
+      <section className="helix-viewport relative flex flex-col items-center pt-10 pb-40 lg:pt-10 lg:pb-60 justify-center gap-[400px]" ref={containerRef}>
         {cardsData.map((data, index) => (
           <div key={index} className={`helix-card glass-card rounded-[40px] p-8 w-full max-w-xl ${data.glowClass}`} data-index={index}>
             <div className="flex justify-between items-start mb-6">
