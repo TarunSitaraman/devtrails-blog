@@ -1,0 +1,50 @@
+/* App Layout overrides specific to the Stitch HTML integration */
+
+.helix-viewport {
+  perspective: 2000px;
+  transform-style: preserve-3d;
+}
+
+.helix-card {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  /* Reduced transition time to be more responsive to fast smooth scroll */
+  transition: transform 0.05s linear;
+}
+
+/* Glassmorphism Signature */
+.glass-card {
+  background: rgba(37, 37, 45, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(150, 248, 255, 0.15);
+  box-shadow: 0 0 30px rgba(0, 243, 255, 0.05);
+}
+
+.kinetic-glow-blue {
+  box-shadow: 0 0 20px rgba(150, 248, 255, 0.2);
+  border: 1px solid rgba(150, 248, 255, 0.3);
+}
+
+.kinetic-glow-green {
+  box-shadow: 0 0 20px rgba(0, 254, 102, 0.2);
+  border: 1px solid rgba(0, 254, 102, 0.3);
+}
+
+/* Custom Scrollbar for premium feel */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0e0e13; }
+::-webkit-scrollbar-thumb { background: #48474d; border-radius: 10px; }
+
+.energy-pillar {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40vw;
+  height: 120vh;
+  background: radial-gradient(circle, rgba(150, 248, 255, 0.08) 0%, rgba(0, 254, 102, 0.03) 50%, transparent 70%);
+  filter: blur(80px);
+  z-index: -2;
+  pointer-events: none;
+}
