@@ -29,16 +29,16 @@ const cardsData = [
     locked: false,
   },
   {
-    layer: 'Interaction Layer',
-    title: 'Week 3: Moving from Mock to Machine',
-    icon: 'view_quilt',
-    content: 'Phase 2 is about execution. We are stripping out our Phase 1 stubs and wiring up real-world intelligence. We are integrating live APIs (OpenWeatherMap and AQI) to trigger automated claims. Our XGBoost pricing engine is actively scaling the micro-surcharge based on hyper-local weather. We also added explicit systemic exclusions and Aggregate Stop-Loss Reinsurance to protect against cluster risks.',
+    layer: 'Product Layer',
+    title: 'Week 3: Product, APIs, and Intelligence',
+    icon: 'smartphone',
+    content: "Week 3 marked our transition into the scale phase, focusing on connecting backend logic, fraud intelligence, and user flows. We began developing the React Native app using Expo, prioritizing a high-trust interface with an “Insurance Active” banner and a zero-touch claims dashboard to make protection feel visible and immediate.\n\nA major focus was integrating our core REST APIs—like /accept-trip and /trigger-disruption—so policy activation stays aligned with real-time risk. We simultaneously upgraded the Isolation Forest fraud model to detect GPS spoofing and refined the XGBoost pricing engine to respond to hyper-local risk.\n\nUltimately, this week was about turning automation into action — bringing us closer to a system where a worker can move from a verified disruption to a payout in under 40 minutes.",
     glowClass: 'kinetic-glow-blue',
     accentColor: 'text-primary',
     bgLight: 'bg-primary/10',
     borderLight: 'border-primary/20',
-    tags: ['UI', 'UX'],
-    action: 'Live Demo',
+    tags: ['API', 'RN', 'AI'],
+    action: 'View Architecture',
     locked: false,
   },
   {
@@ -90,7 +90,7 @@ export default function TimelineSpine() {
     const handleScroll = () => {
       if (!containerRef.current) return;
       
-      const cards = containerRef.current.querySelectorAll('.helix-card');
+      const cards = containerRef.current.querySelectorAll('.fade-card');
       const winH = window.innerHeight;
       const viewCenter = winH / 2;
 
@@ -98,34 +98,16 @@ export default function TimelineSpine() {
         const rect = card.getBoundingClientRect();
         const cardCenter = rect.top + rect.height / 2;
         
-        let progress = (cardCenter - viewCenter) / viewCenter;
+        const distanceFromCenter = Math.abs(cardCenter - viewCenter);
+        const normalized = Math.min(distanceFromCenter / (winH * 0.6), 1);
         
-        // 1. Create a "Reading Focus Deadzone"
-        // If the card is within 25% of the center, force progress to 0 (perfectly flat and centered)
-        const deadzone = 0.25; 
-        let visualProgress = 0;
-        if (progress > deadzone) {
-            visualProgress = (progress - deadzone) / (1 - deadzone);
-        } else if (progress < -deadzone) {
-            visualProgress = (progress + deadzone) / (1 - deadzone);
-        }
+        const ease = Math.pow(normalized, 1.2);
         
-        visualProgress = Math.max(-1.2, Math.min(1.2, visualProgress));
+        const opacity = 1 - (ease * 0.85); 
+        const scale = 1 - (ease * 0.08);   
 
-        // 2. Apply smoother, gentler 3D transformations for the backgrounded cards
-        const translateX = Math.sin(visualProgress * Math.PI) * 120;
-        const translateZ = Math.abs(visualProgress) * -400; // Push back linearly instead of cosine curvature
-        const rotateY = visualProgress * 30; // Gentler tilt
-        const rotateZ = visualProgress * 3;
-        const opacity = Math.max(0.15, 1 - Math.abs(visualProgress) * 0.8);
-
-        card.style.transform = `
-            translateX(${translateX}px) 
-            translateZ(${translateZ}px) 
-            rotateY(${rotateY}deg) 
-            rotateZ(${rotateZ}deg)
-        `;
-        card.style.opacity = opacity;
+        card.style.transform = `scale(${scale})`;
+        card.style.opacity = Math.max(0.15, opacity);
       });
     };
 
@@ -139,9 +121,9 @@ export default function TimelineSpine() {
 
   return (
     <>
-      <section className="helix-viewport relative flex flex-col items-center pt-10 pb-40 lg:pt-10 lg:pb-60 justify-center gap-[400px]" ref={containerRef}>
+      <section className="relative flex flex-col items-center pt-24 pb-40 lg:pt-32 lg:pb-60 justify-center gap-16 md:gap-24" ref={containerRef}>
         {cardsData.map((data, index) => (
-          <div key={index} className={`helix-card glass-card rounded-[40px] p-8 w-full max-w-xl ${data.glowClass}`} data-index={index}>
+          <div key={index} className={`fade-card glass-card rounded-[40px] p-8 w-full max-w-xl transition-none ${data.glowClass}`} data-index={index}>
             <div className="flex justify-between items-start mb-6">
               <div>
                 <span className={`${data.accentColor} text-xs font-bold uppercase tracking-widest block mb-2`}>{data.layer}</span>

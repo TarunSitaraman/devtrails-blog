@@ -55,15 +55,15 @@ export default function FeatureModal({ itemId, onClose }) {
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20">
               <span className="material-symbols-outlined text-primary">
-                {itemId === 0 ? 'account_tree' : itemId === 1 ? 'security' : 'api'}
+                {itemId === 0 ? 'account_tree' : itemId === 1 ? 'security' : 'smartphone'}
               </span>
             </div>
             <div>
               <h3 className="text-white font-bold text-lg tracking-tight">
-                {itemId === 0 ? 'Parametric Surcharge Flow' : itemId === 1 ? 'Execution Architecture & Anti-Spoofing' : 'Live XGBoost Sandbox'}
+                {itemId === 0 ? 'Parametric Surcharge Flow' : itemId === 1 ? 'Execution Architecture & Anti-Spoofing' : 'End-to-End Product Integration'}
               </h3>
               <p className="text-on-surface-variant text-xs uppercase tracking-widest">
-                {itemId === 0 ? 'Module Inspector' : itemId === 1 ? 'System Overview' : 'Interactive Demo'}
+                {itemId === 0 ? 'Module Inspector' : itemId === 1 ? 'System Overview' : 'Architecture Model'}
               </p>
             </div>
           </div>
@@ -201,48 +201,63 @@ export default function FeatureModal({ itemId, onClose }) {
           )}
 
           {itemId === 2 && (
-            <div className="animate-in slide-in-from-bottom-4 duration-500">
-              <h4 className="text-xl font-bold text-white mb-2 text-center">XGBoost Pricing Simulation Engine</h4>
-              <p className="text-sm text-on-surface-variant text-center mb-8">Type a location to trigger the OpenWeatherMap stub and calculate localized micro-surcharges.</p>
-
-              <div className="max-w-md mx-auto p-6 rounded-3xl bg-surface-container border border-outline-variant/20 shadow-2xl">
-                <div className="flex gap-2 mb-6">
-                  <input type="text" placeholder="Enter City (e.g., Mumbai, Delhi)" defaultValue="Mumbai, MH" className="w-full bg-[#0e0e13] border border-outline-variant/30 rounded-xl px-4 text-sm text-white focus:outline-none focus:border-primary transition-colors" />
-                  <button className="px-4 py-3 bg-primary text-on-primary font-bold text-sm rounded-xl uppercase tracking-wider hover:bg-primary-dim transition-colors flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">search</span> Ping
-                  </button>
+            <div className="animate-in slide-in-from-bottom-4 duration-500 h-full flex flex-col justify-center">
+              <h4 className="text-2xl font-bold text-white mb-8 text-center pt-8">End-to-End Product Architecture</h4>
+              
+              <div className="flex flex-col md:flex-row items-center justify-between gap-8 p-12 md:py-32 rounded-3xl bg-surface-container border border-outline-variant/20 shadow-2xl">
+                <div className="flex flex-col items-center gap-4 w-full">
+                  <span className="material-symbols-outlined text-5xl text-[#acaab1]">smartphone</span>
+                  <p className="text-lg font-bold text-white text-center">React Native App<br/><span className="text-sm text-on-surface-variant font-normal">High-Trust UI</span></p>
                 </div>
+                
+                <div className="h-16 w-0.5 md:w-32 md:h-0.5 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-primary to-transparent relative">
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-primary font-bold whitespace-nowrap bg-surface-container px-3 py-1 rounded-full border border-primary/20">/trigger-disruption</span>
+                </div>
+                
+                <div className="flex flex-col items-center gap-4 w-full p-8 rounded-2xl bg-primary/5 border border-primary/20 shadow-[0_0_40px_rgba(0,243,255,0.15)] transform hover:scale-105 transition-transform relative">
+                  <span className="material-symbols-outlined text-5xl text-primary">my_location</span>
+                  <p className="text-lg font-bold text-primary text-center">Fraud Intelligence<br/><span className="text-sm text-primary/70 font-normal">Isolation Forest & XGBoost</span></p>
+                </div>
+                
+                <div className="h-16 w-0.5 md:w-32 md:h-0.5 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-secondary to-transparent relative">
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs text-secondary font-bold whitespace-nowrap bg-surface-container px-3 py-1 rounded-full border border-secondary/20">Verified Claim</span>
+                </div>
+                
+                <div className="flex flex-col items-center gap-4 w-full p-8 rounded-2xl bg-secondary/5 border border-secondary/20 shadow-[0_0_40px_rgba(0,254,102,0.1)] transform hover:scale-105 transition-transform">
+                  <span className="material-symbols-outlined text-5xl text-secondary">request_quote</span>
+                  <p className="text-lg font-bold text-secondary text-center">Zero-Touch Payout<br/><span className="text-sm text-secondary/70 font-normal">&lt; 40 Minute SLA</span></p>
+                </div>
+              </div>
 
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center p-4 rounded-xl bg-surface border border-outline-variant/10">
-                    <div className="flex items-center gap-3">
-                      <span className="material-symbols-outlined text-error text-3xl">thunderstorm</span>
-                      <div>
-                        <p className="text-on-surface-variant text-xs uppercase tracking-widest">Live Weather (Mock)</p>
-                        <p className="text-white font-bold text-lg">Severe Thunderstorms</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-error text-xs uppercase tracking-widest font-bold">AQI Alert</p>
-                      <p className="text-white text-sm">PM2.5: 180</p>
+              {/* Additional Week 3 Deliverables */}
+              <div className="mt-12 mb-8">
+                <h5 className="text-sm font-bold text-on-surface-variant uppercase tracking-widest mb-6 text-center">Week 3 Scale Milestones</h5>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  
+                  <div className="scroll-animate-card opacity-0 translate-y-12 transition-all duration-700 ease-out delay-100 p-6 rounded-2xl bg-[#0e0e13] border border-outline-variant/20 shadow-lg flex flex-col gap-4 hover:border-primary/30 group">
+                    <span className="material-symbols-outlined text-3xl text-primary group-hover:scale-110 transition-transform">api</span>
+                    <div>
+                      <h6 className="text-white font-bold mb-2">Core API Integration</h6>
+                      <p className="text-xs text-on-surface-variant leading-relaxed">Wired up real-world REST APIs (/accept-trip, /complete-trip) to align policy activation perfectly with occupational risk windows.</p>
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-secondary/20 relative overflow-hidden">
-                    <div className="absolute -right-4 -bottom-4 opacity-5">
-                      <span className="material-symbols-outlined text-9xl">analytics</span>
-                    </div>
-                    <p className="text-primary text-xs uppercase tracking-widest font-bold mb-1">XGBoost Output</p>
-                    <p className="text-sm text-on-surface-variant mb-4">Risk cluster identified. Adjusting checkout payload dynamically to balance liquidity pool.</p>
-                    
-                    <div className="flex justify-between items-end">
-                      <div>
-                        <p className="text-[10px] text-[#acaab1] uppercase tracking-widest mb-1">Generated Surcharge</p>
-                        <p className="text-4xl font-black text-secondary">₹4.85</p>
-                      </div>
-                      <button className="text-xs uppercase tracking-widest text-primary font-bold hover:underline">View Claim Triggers</button>
+                  <div className="scroll-animate-card opacity-0 translate-y-12 transition-all duration-700 ease-out delay-200 p-6 rounded-2xl bg-[#0e0e13] border border-outline-variant/20 shadow-lg flex flex-col gap-4 hover:border-secondary/30 group">
+                    <span className="material-symbols-outlined text-3xl text-secondary group-hover:scale-110 transition-transform">smartphone</span>
+                    <div>
+                      <h6 className="text-white font-bold mb-2">React Native Experience</h6>
+                      <p className="text-xs text-on-surface-variant leading-relaxed">Built the Expo mobile app featuring an "Insurance Active" banner and a zero-touch claims dashboard to build worker trust.</p>
                     </div>
                   </div>
+
+                  <div className="scroll-animate-card opacity-0 translate-y-12 transition-all duration-700 ease-out delay-300 p-6 rounded-2xl bg-[#0e0e13] border border-outline-variant/20 shadow-lg flex flex-col gap-4 hover:border-white/30 group">
+                    <span className="material-symbols-outlined text-3xl text-white group-hover:scale-110 transition-transform">model_training</span>
+                    <div>
+                      <h6 className="text-white font-bold mb-2">Intelligence Upgrades</h6>
+                      <p className="text-xs text-on-surface-variant leading-relaxed">Upgraded the Isolation Forest to detect GPS spoofing and refined the XGBoost engine to respond to hyper-local risk dynamically.</p>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
